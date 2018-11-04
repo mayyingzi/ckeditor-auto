@@ -116,10 +116,14 @@
 				var style = 'text-align';
 				var align = node.getStyle( style );
 
-				if ( align == 'left' )
+				if ( align == 'left' ){
 					node.setStyle( style, 'right' );
-				else if ( align == 'right' )
+					CKEDITOR.config.raw['text-align'] = 'right'
+				} else if ( align == 'right' ) {
 					node.setStyle( style, 'left' );
+					CKEDITOR.config.raw['text-align'] = 'left'
+
+				}
 			}
 		}
 	}
@@ -175,6 +179,7 @@
 						else if ( !className )
 							block.removeAttribute( 'class' );
 					} else if ( apply && isAllowedTextAlign ) {
+						CKEDITOR.config.raw['text-align'] = this.value
 						block.setStyle( 'text-align', this.value );
 					}
 				}

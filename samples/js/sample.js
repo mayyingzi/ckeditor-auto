@@ -26,7 +26,7 @@ CKEDITOR.config.dataParser = function (data) {
 }
 
 // paste image
-CKEDITOR.config.zPastImgData = function(data) {
+CKEDITOR.config.zPastImgData = function (data) {
 	console.log('------:data', data)
 }
 CKEDITOR.config.zImgSize = 5
@@ -77,6 +77,12 @@ var initSample = (function () {
 
 document.getElementById('showData').onclick = function () {
 	var curHtml = CKEDITOR.instances.editor.getData()
-	console.log(curHtml)
-	document.getElementById('mainData').innerHTML =curHtml
+	document.getElementById('mainData').innerHTML = curHtml
 }
+
+// 初始化内容
+CKEDITOR.on('instanceReady', function (e) { 
+	CKEDITOR.instances.editor.setData('<h1>初始化内容</h1>'); 
+	// CKEDITOR.addCss('.cke_editable p { margin: 0 !important; }');
+});
+
