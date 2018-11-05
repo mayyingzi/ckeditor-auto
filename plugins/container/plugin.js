@@ -1,0 +1,14 @@
+(function() {
+    CKEDITOR.plugins.add('container', {
+        requires: ['dialog'],
+        init: function(editor) {
+            editor.addCommand('container', new CKEDITOR.dialogCommand('container'))
+            editor.ui.addButton('container', {
+                label: '内容边距设置',
+                command: 'container',
+                icon: this.path + 'page.png'
+            });
+            CKEDITOR.dialog.add('container', this.path + 'dialogs/container.js')
+        }
+    })
+})()

@@ -73,7 +73,7 @@ CKEDITOR.editorConfig = function (config) {
 
 	config.fontSize_sizes = 'x-small;small;normal;large;x-large;xx-large';
 	// FIXME:simage图片上传，依赖jq
-	config.extraPlugins = 'rowspacingbottom,rowspacingtop,div,colorbutton,lineheight,letterspacing,colordialog,simage,justify,quicktable,imagepaste';
+	config.extraPlugins = 'container,rowspacingbottom,rowspacingtop,div,colorbutton,lineheight,letterspacing,colordialog,simage,justify,quicktable,imagepaste';
 	config.forcePasteAsPlainText = false
 	config.pasteFromWordRemoveFontStyles = false;
 	config.pasteFromWordRemoveStyles = false;

@@ -69,6 +69,13 @@ CKEDITOR.plugins.add('simage', {
 								var data = $.parseJSON(xhr.responseText);
 								CKEDITOR.instances[curr.name].setReadOnly(false)
 								url = editor.config.dataParser(data)
+								// 服务端报错
+								if(!url) {
+									loaderElem.remove()
+									$(CKEDITOR.instances[curr.name]).trigger('enableFormSubmit')
+									editor.config.zImgFail()
+									return
+								}
 								elem = new CKEDITOR.dom.element('p')
 								maxWidth = Math.min(inputWidth, 600)
 								maxHeight = Math.min(inputHeight, 600)

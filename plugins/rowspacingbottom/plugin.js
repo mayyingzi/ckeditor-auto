@@ -5,7 +5,7 @@
 		var styles = {};
 		for ( var i = 0; i < names.length; i++ ) {
 			var parts = names[ i ];
-			if ( parts ) {				
+			if ( parts ) {
 				parts = parts.split( '/' );
 				var vars = {},name = names[ i ] = parts[ 0 ];
 				vars[ styleType ] = values[ i ] = parts[ 1 ] || name;
@@ -17,7 +17,7 @@
 			} else {
 				names.splice( i--, 1 );
 			}
-				
+
 		}
 		editor.ui.addRichCombo( comboName, {
 			label: editor.lang.rowspacingbottom.title,
@@ -37,9 +37,10 @@
 					this.add( name, styles[ name ].buildPreview(), name );
 				}
 			},
-			onClick: function( value ) {				
+			onClick: function( value ) {
 				editor.focus();
 				editor.fire( 'saveSnapshot' );
+				/** apply style
 				var style = styles[ value ];
 				CKEDITOR.config.raw.bottom = value
 				var addStyle = new CKEDITOR.style( {
@@ -53,8 +54,57 @@
 					{
 						element: 'text-align', attributes: { 'textAlign': null }
 					}]
-				}, {size: CKEDITOR.config.raw.top, bottom: value, textAlign: CKEDITOR.config.raw['text-align']})	
+				}, {size: CKEDITOR.config.raw.top, bottom: value, textAlign: CKEDITOR.config.raw['text-align']})
 				editor[ this.getValue() == value ? 'removeStyle' : 'applyStyle' ]( style );
+				*/
+
+				/**
+				 * setStyle
+				 */
+				var selection = editor.getSelection(),
+					enterMode = editor.config.enterMode;
+
+				if ( !selection )
+					return;
+
+				var bookmarks = selection.createBookmarks(),
+					ranges = selection.getRanges();
+
+				var iterator, block;
+
+				var useComputedState = editor.config.useComputedState;
+				useComputedState = useComputedState === undefined || useComputedState;
+
+				for ( var i = ranges.length - 1; i >= 0; i-- ) {
+					iterator = ranges[ i ].createIterator();
+					iterator.enlargeBr = enterMode != CKEDITOR.ENTER_BR;
+
+					while ( ( block = iterator.getNextParagraph( enterMode == CKEDITOR.ENTER_P ? 'p' : 'div' ) ) ) {
+						if ( block.isReadOnly() )
+							continue;
+
+						// Check if style or class might be applied to currently processed element (#455).
+						var tag = block.getName(),
+							isAllowedTextAlign;
+
+						isAllowedTextAlign = editor.activeFilter.check( tag + '{margin-bottom}' );
+
+
+						if ( !isAllowedTextAlign ) {
+							continue;
+						}
+
+						// block.removeAttribute( 'align' );
+						block.removeStyle( 'margin-bottom' );
+						block.setStyle( 'margin-bottom', value);
+
+					}
+
+				}
+				editor.focus();
+				editor.forceNextSelectionCheck();
+				selection.selectBookmarks( bookmarks );
+
 				editor.fire( 'saveSnapshot' );
 			},
 			onRender: function() {

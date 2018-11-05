@@ -52,7 +52,8 @@ blockquote
 
 a
 {
-	color: #0782C1;
+	color: #333;
+	text-decoration: none;
 }
 
 ol,ul,dl
