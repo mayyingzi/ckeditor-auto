@@ -8,7 +8,6 @@ CKEDITOR.plugins.add('simage', {
 				a.setAttribute('type', 'file')
 				a.setAttribute('multiple', 'multiple');
 				a.setAttribute('accept', '.jpg,.jpeg,.png,.tif,.gif,.svg')
-				a.click()
 				a.onchange = function () {
 					if (!a.files || a.files.length > 5) {
 						editor.config.zImgFail('一次最多只能上传5张图片')
@@ -16,7 +15,6 @@ CKEDITOR.plugins.add('simage', {
 					}
 					var curCount = 0;
 					var curr = CKEDITOR.currentInstance
-
 					var multipleUp = function () {
 						var file = a.files[curCount];
 						$(CKEDITOR.currentInstance).trigger('enableFormSubmit')
@@ -107,6 +105,7 @@ CKEDITOR.plugins.add('simage', {
 					}
 					multipleUp()
 				}
+				a.click()
 
 			}
 		});
