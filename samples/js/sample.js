@@ -34,6 +34,25 @@ CKEDITOR.config.zImgFail = function (data) {
 	alert(data || '上传失败，请重尝试')
 }
 
+// 视频上传
+CKEDITOR.config.html5video_v1UploadFn = function(file,callback){
+	var maxSize = 20 * 1024 *1024;
+	if (file.size > maxSize) {
+		// 提示 ‘请上传有效的视频且低于20M’
+		return
+	}
+	// TODO:视频上传回调
+	//uploadFile(file);
+	var file_url = 'http://vod.pigkeeping.cn/77ab56c4f83745559f455f2d21890ca3/fbdb91ace0f548108d700e1059082245-c12633e06beb6e71a770377124975de3-fd.mp4'
+	callback(file_url);
+}
+
+// 视频上传-终止
+CKEDITOR.config.html5video_v1UploadStop = function(callback){
+	// TODO:视频上传接口终端
+	callback('中断成功');
+}
+
 
 var initSample = (function () {
 	var wysiwygareaAvailable = isWysiwygareaAvailable(),
@@ -81,8 +100,8 @@ document.getElementById('showData').onclick = function () {
 }
 
 // 初始化内容
-CKEDITOR.on('instanceReady', function (e) { 
-	CKEDITOR.instances.editor.setData('<h1>初始化内容</h1>'); 
+CKEDITOR.on('instanceReady', function (e) {
+	CKEDITOR.instances.editor.setData('<h1>初始化内容</h1>');
 	// CKEDITOR.addCss('.cke_editable p { margin: 0 !important; }');
 });
 
